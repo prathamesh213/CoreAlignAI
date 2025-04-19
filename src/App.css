@@ -1,0 +1,146 @@
+.navbar {
+  /* Keep existing styles */
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Svalbard', serif;
+  width: 100%; /* Make navbar full width */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+.navbar-logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  font-size: 1.5rem;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+body {
+      margin: 0;     
+      background-image: url(./images/bd.jpg);
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
+@keyframes riseUp {
+      0% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .info-section {
+      align-self: center;
+      color: white;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)); /* Black gradient translucent background */
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 30px;
+      display: inline-block; /* Only as wide as the text */
+      text-align: center; /* Align text to the left */
+    }
+    .byline {
+      font-size: 2rem;
+      color: white;
+      margin-top: 10px;
+    }
+    .byline span {
+      font-size: 1.5rem;
+      color: white;
+      margin-top: 10px;
+    }
+    .byline span:hover {
+      color: #ffcc00; /* Change color on hover */
+      text-decoration: underline; /* Underline on hover */
+    }
+    .byline span:active {
+      color: #ff9900; /* Darker color on click */
+    }
+    .signUp {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background: rgba(20, 20, 20, 0.7); /* translucent dark */
+      border-radius: 18px;
+      padding: 32px 28px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+      max-width: 350px;
+      margin-top: 32px;
+      animation: riseUp 0.8s cubic-bezier(.39,.575,.565,1) both;
+    }
+    
+    .signUp input {
+      background: rgba(255,255,255,0.08);
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 1.1rem;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin: 0;
+      transition: background, 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    
+    .signUp input:focus {
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    
+    .phone-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .country-code {
+      background: rgba(255,255,255,0.10);
+      color: #fff;
+      border-radius: 6px;
+      padding: 12px 10px;
+      font-size: 1.08rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    
+    .signup-btn {
+      margin-top: 10px;
+      background: linear-gradient(90deg, #222 60%, #444 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 0;
+      font-size: 1.13rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      transition: background 0.2s, transform 0.2s;
+    }
+    
+    .signup-btn:hover {
+      background: linear-gradient(90deg, #444 60%, #666 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    
+    ::placeholder {
+      color: #bbb;
+      opacity: 1;
+    }
+    
+
