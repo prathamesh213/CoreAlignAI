@@ -1,20 +1,156 @@
+/* General container to cover entire page */
+.main-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000; /* Pure black background */
+  color: #e0e0e0; /* Light grey text for contrast */
+  overflow-y: auto; /* Enable scroll if content overflows */
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  justify-content: flex-start; /* Align content to the top */
+}
+
+/* Assessment page specific styles */
 .assessment-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #222;
-    color: white;
-    font-family: 'Svalbard', serif;
-  }
-  
-  .assessment-container h1 {
-    font-size: 3rem;
+  font-family: 'Arial', sans-serif;
+  color: #e0e0e0;
+  padding: 24px;
+  margin: 20px auto;
+  max-width: 900px;
+  text-align: left;
+}
+
+.assessment-container h2 {
+  color: #fff;
+  border-bottom: 2px solid #555;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 1.7rem;
+}
+
+.sentence-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  background-color: rgba(50, 50, 50, 0.3); /* Subtle background for sentence rows */
+}
+
+.sentence-row:hover {
+  background-color: rgba(70, 70, 70, 0.5);
+}
+
+.sentence-row span {
+  flex-grow: 1;
+  margin-right: 20px;
+  line-height: 1.4;
+}
+
+.sentence-row input[type="number"] {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.sentence-row input[type="number"]:focus {
+  border-color: #777;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.counter {
+  text-align: right;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ccc;
+}
+
+.go {
+  display: block;
+  width: 200px;
+  padding: 12px;
+  margin: 30px auto;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.go:hover {
+  background-color: #4cae4c;
+}
+
+.go:disabled {
+  background-color: #777;
+  cursor: not-allowed;
+}
+
+/* Style for instruction container */
+.instruction-container {
+  font-family: 'Arial', sans-serif;
+  color: #e0e0e0;
+  padding: 24px;
+  margin: 20px auto;
+  max-width: 900px;
+  text-align: left;
+}
+
+.instruction-container h1 {
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 2.2rem;
+}
+
+.instruction-container p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Style for results page */
+.results-container {
+    font-family: 'Arial', sans-serif;
+    color: #e0e0e0;
+    padding: 24px;
+    margin: 20px auto;
+    max-width: 900px;
+    text-align: left;
+}
+
+.results-container h2 {
+    color: #fff;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
     margin-bottom: 20px;
-  }
-  
-  .assessment-container p {
-    font-size: 1.5rem;
-  }
-  
+    text-align: left;
+    font-size: 1.7rem;
+}
+
+.results-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.results-container li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
