@@ -37,7 +37,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/users/register', {
+      const response = await fetch('http://localhost:8081/user/signUp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ function App() {
       return;
     }
     try {
-      const response = await fetch('http://localhost:8000/api/users/login', {
+      const response = await fetch('http://localhost:8081/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

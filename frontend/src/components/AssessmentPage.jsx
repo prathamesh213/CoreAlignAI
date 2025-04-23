@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import {AssessmentTwo} from './Assesmenttwo';
 import './AssessmentPage.css';
 
 const belbinSections = [
@@ -111,178 +112,174 @@ const belbinSections = [
     "76": "CO", "70": "SH", "75": "PL", "71": "ME", "74": "IMP", "78": "TW", "73": "RI", "72": "CF", "77": "SP",
 };
 
+
 function BelbinTest({ onTestComplete }) {
     const [section, setSection] = useState(0);
-    const [points, setPoints] = useState(() => belbinSections.map(s => Array(s.sentences.length).fill(0)));
+    const [points, setPoints] = useState(() =>
+      belbinSections.map((s) => Array(s.sentences.length).fill(0))
+    );
     const [counter, setCounter] = useState(10);
-
+  
     const currentSection = belbinSections[section];
-    const totalPointsUsed = useMemo(() => points[section].reduce((acc, val) => acc + val, 0), [points, section]);
-
-    const handlePointChange = useCallback((index, value) => {
+    const totalPointsUsed = useMemo(
+      () => points[section].reduce((acc, val) => acc + val, 0),
+      [points, section]
+    );
+  
+    const handlePointChange = useCallback(
+      (index, value) => {
         const parsedValue = Math.max(0, Math.min(10, parseInt(value) || 0));
         if (totalPointsUsed - points[section][index] + parsedValue <= 10) {
-            setPoints(prevPoints => {
-                const newPoints = prevPoints.map((sectionPoints, sectionIndex) => {
-                    if (sectionIndex === section) {
-                        return sectionPoints.map((point, pointIndex) => {
-                            if (pointIndex === index) {
-                                return parsedValue;
-                            }
-                            return point;
-                        });
-                    }
-                    return sectionPoints;
-                });
-
-                return newPoints;
+          setPoints((prevPoints) => {
+            const newPoints = prevPoints.map((sectionPoints, sectionIndex) => {
+              if (sectionIndex === section) {
+                return sectionPoints.map((point, pointIndex) =>
+                  pointIndex === index ? parsedValue : point
+                );
+              }
+              return sectionPoints;
             });
-
+            return newPoints;
+          });
         } else {
-            alert("Cannot Exceed 10 Points");
+          alert('Cannot Exceed 10 Points');
         }
-    }, [section, setPoints, totalPointsUsed]);
-
+      },
+      [section, points, totalPointsUsed]
+    );
+  
     useEffect(() => {
-        setCounter(10 - totalPointsUsed);
+      setCounter(10 - totalPointsUsed);
     }, [totalPointsUsed]);
-
-    const handleSubmit = useCallback((e) => {
+  
+    const handleSubmit = useCallback(
+      (e) => {
         e.preventDefault();
         if (totalPointsUsed !== 10) {
-            alert("You must assign all 10 points before continuing.");
-            return;
+          alert('You must assign all 10 points before continuing.');
+          return;
         }
         if (section < belbinSections.length - 1) {
-            setSection(section + 1);
+          setSection(section + 1);
         } else {
-            const calculatedResults = calculateBelbinRoles(points);
-            onTestComplete(calculatedResults);
+          const calculatedResults = calculateBelbinRoles(points);
+          onTestComplete(calculatedResults);
         }
-    }, [onTestComplete, points, section, totalPointsUsed]);
-
-    return (
-        <div className="assessment-container">
-            <h2>{currentSection.title}</h2>
-            <form onSubmit={handleSubmit}>
-                {currentSection.sentences.map((sentence, index) => (
-                    <div key={index} className="sentence-row">
-                        <span>{sentence.text}</span>
-                        <input
-                            type="number"
-                            min="0"
-                            max="10"
-                            value={points[section][index]}
-                            onChange={(e) => handlePointChange(index, e.target.value)}
-                        />
-                    </div>
-                ))}
-                <div className="counter">Points remaining: {counter}</div>
-                <button type="submit" className="go" disabled={totalPointsUsed !== 10}>
-                    {section === belbinSections.length - 1 ? "Finish" : "Next Section"}
-                </button>
-            </form>
-        </div>
+      },
+      [onTestComplete, points, section, totalPointsUsed]
     );
-}
+  
+    return (
+      <div className="assessment-container">
+        <h2>{currentSection.title}</h2>
+        <form onSubmit={handleSubmit}>
+          {currentSection.sentences.map((sentence, index) => (
+            <div key={index} className="sentence-row">
+              <span>{sentence.text}</span>
+              <input
+                type="number"
+                min="0"
+                max="10"
+                value={points[section][index]}
+                onChange={(e) => handlePointChange(index, e.target.value)}
+              />
+            </div>
+          ))}
+          <div className="counter">Points remaining: {counter}</div>
+          <button type="submit" className="go" disabled={totalPointsUsed !== 10}>
+            {section === belbinSections.length - 1 ? 'Finish' : 'Next Section'}
+          </button>
+        </form>
+      </div>
+    );
+  }
+  
+  function InstructionPage({ onTestStart }) {
+    return (
+      <div className="instruction-container">
+        <h1>Assessment One</h1>
+        <p>BELBIN TEAM ROLES QUESTIONNAIRE</p>
+        <p>
+          This questionnaire is about how you prefer to work in teams and what your distinctive contribution is. There are no right or wrong answers. It should take 15 to 20 minutes to complete - spending longer will not improve the result.
+        </p>
+        <button className="go" onClick={onTestStart}>
+          Let's Go!
+        </button>
+      </div>
+    );
+  }
+  
 
-function onClick() {
-    const button = document.querySelector('Finish'); }
-
-function calculateBelbinRoles(points) {
+  
+  function calculateBelbinRoles(points) {
     const belbinScores = {
-        CO: 0, SH: 0, PL: 0, ME: 0, IMP: 0, TW: 0, RI: 0, CF: 0, SP: 0,
+      CO: 0,
+      SH: 0,
+      PL: 0,
+      ME: 0,
+      IMP: 0,
+      TW: 0,
+      RI: 0,
+      CF: 0,
+      SP: 0,
     };
     points.forEach((sectionPoints, sectionIndex) => {
-        belbinSections[sectionIndex].sentences.forEach((sentence, sentenceIndex) => {
-            const role = belbinMatrix[sentence.num];
-            belbinScores[role] += sectionPoints[sentenceIndex];
-        });
+      belbinSections[sectionIndex].sentences.forEach((sentence, sentenceIndex) => {
+        const role = belbinMatrix[sentence.num];
+        belbinScores[role] += sectionPoints[sentenceIndex];
+      });
     });
-    console.log("Belbin Score Calculation", belbinScores);
     return belbinScores;
-}
-
-function InstructionPage({ onTestStart }) {
-    return (
-        <div className="instruction-container">
-            <h1>Assessment One</h1>
-            <p>BELBIN TEAM ROLES QUESTIONNAIRE</p>
-            <p>
-                This questionnaire is about how you prefer to work in teams and what your distinctive contribution is. There are no right or wrong answers. It should take 15 to 20 minutes to complete - spending longer will not improve the result.
-            </p>
-            <button className='go' onClick={onTestStart}>Let's Go!</button>
-        </div>
-    );
-}
-
-function ResultsPage({ results }) {
-    const sortedRoles = Object.entries(results)
-        .sort(([, a], [, b]) => b - a)
-        .map(([role, score]) => ({ role, score }));
-
-    return (
-        <div className="assessment-container">
-            <h2>Belbin Roles Results</h2>
-            <p>Here are your top Belbin Roles, based on your assessment:</p>
-            <ul>
-                {sortedRoles.map(({ role, score }) => (
-                    <li key={role}>
-                        {role}: {score}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-}
-
-function AssessmentPage() {
+  }
+  
+  function AssessmentPage() {
     const [testStarted, setTestStarted] = useState(false);
     const [results, setResults] = useState(null);
-
+    const [showAssessmentTwo, setShowAssessmentTwo] = useState(false);
+  
     const handleTestStart = () => {
-        setTestStarted(true);
+      setTestStarted(true);
     };
-
-    const handleTestComplete = useCallback((results) => {
-        // Post to Backend
-        fetch('http://localhost:8000/api/users/assessmentone', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(results),
+  
+    const handleTestComplete = useCallback(
+      (results) => {
+        // Post results to Spring Boot backend
+        fetch('http://localhost:8081/user/assessmentOne', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(results),
         })
-        .then(response => {
+          .then((response) => {
             if (!response.ok) {
-                throw new Error('Backend did not accept');
+              throw new Error('Backend did not accept');
             }
             return response.json();
-        })
-        .then(data => {
+          })
+          .then((data) => {
             console.log('Backend Responded', data);
             setResults(results);
-        })
-        .catch((error) => {
+            // Instead of showing results page, render AssessmentTwo component
+            setShowAssessmentTwo(true);
+          })
+          .catch((error) => {
             console.error('Error Posting', error);
             setResults({ error: 'There was an error with request' });
-        });
-    }, []);
-
-    return (
-        <div className="main-container">
-            {testStarted ? (
-                <BelbinTest onTestComplete={handleTestComplete} />
-            ) : (
-                <InstructionPage onTestStart={handleTestStart} />
-            )}
-            {results && (
-                <ResultsPage results={results} />
-            )}
-        </div>
+          });
+      },
+      []
     );
-}
-
-export default AssessmentPage;
-export { belbinSections, belbinMatrix };
-export { calculateBelbinRoles };
+  
+    return (
+      <div className="main-container">
+        {!testStarted && <InstructionPage onTestStart={handleTestStart} />}
+        {testStarted && !showAssessmentTwo && <BelbinTest onTestComplete={handleTestComplete} />}
+        {showAssessmentTwo && <AssessmentTwo />}
+      </div>
+    );
+  }
+  
+  export default AssessmentPage;
+  export { belbinSections, belbinMatrix };
+  export { calculateBelbinRoles };
